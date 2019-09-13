@@ -47,7 +47,7 @@ objeto.get("/api/usuarios/:id", (req, res, next) => {
       });
 });
 //POST
-//criacao de usuarios
+//postando valores
 
 var bodyParser = require("body-parser");
 objeto.use(bodyParser.urlencoded({ extended: false }));
@@ -82,5 +82,34 @@ objeto.post("/api/usuarios/", (req, res, next) => {
             "data": data,
             "id" : this.lastID
         })
+    });
+})
+
+//PATCH
+//atualizando valores
+objeto.patch("/api/usuarios/:id", (req, res, next) => {
+    var data = {
+        name: req.body.name,
+        email: req.body.email,
+        password : req.body.password ? md5(req.body.password) : null
+    }
+    banco_de_dados.run(
+        `UPDATE usuario set 
+           name = COALESCE(?,name), 
+           email = COALESCE(?,email), 
+           password = COALESCE(?,password) 
+           WHERE id = ?`,
+        //aqui usar o método coalesce para manter o valor atual caso ele não seja nulo
+        [data.name, data.email, data.password, req.params.id],
+        function (err, result) {
+            if (err){
+                res.status(400).json({"error": res.message})
+                return;
+            }
+            res.json({
+                message: "Usuário atualizado com Sucesso",
+                data: data,
+                changes: this.changes
+            })
     });
 })
