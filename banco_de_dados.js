@@ -11,16 +11,16 @@ let banco_de_dados = new sqlite3.Database(dbsource, (err) => {
         console.log('Conectado ao banco de dados!')
         banco_de_dados.run(`CREATE TABLE usuario (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome text, 
+            name text, 
             email text UNIQUE, 
-            senha text,
+            password text,
             CONSTRAINT email_unique UNIQUE (email)
             )`,
         //console.log('Tabela usuario criada com sucesso!')
         (err) => {
             if (err) {
                 console.log('Tabela já está criada!')
-                // var insert = 'INSERT or REPLACE INTO usuario (nome, email, senha) VALUES (?,?,?)'
+                // var insert = 'INSERT or REPLACE INTO usuario (name, email, password) VALUES (?,?,?)'
                 // banco_de_dados.run(insert, ["victor","victor@santos.com",md5("minhasenhasecreta")])
                 // banco_de_dados.run(insert, ["suelen","suelen@simoes.com",md5("swordfish")])
             }

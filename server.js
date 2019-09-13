@@ -2,6 +2,7 @@
 const express = require('express')
 const objeto = express()
 const banco_de_dados = require('./banco_de_dados.js')
+const md5 = require("md5")
 //porta do meu servidor
 const porta_http = 8000
 
@@ -9,6 +10,7 @@ objeto.listen(porta_http, () => {
     console.log(`Servidor rodando na porta ${porta_http}`)
 });
 
+//GET
 //definindo o endpoint root
 objeto.get('/', (request, response, next) => {
     response.json({"message": "Primeiro teste!"})
@@ -44,20 +46,41 @@ objeto.get("/api/usuarios/:id", (req, res, next) => {
         })
       });
 });
+//POST
+//criacao de usuarios
 
+var bodyParser = require("body-parser");
+objeto.use(bodyParser.urlencoded({ extended: false }));
+objeto.use(bodyParser.json());
 
-
-// objeto.get("/api/usuarios/:id", (req, res, next) => {
-//     var sql = "select * from usuario where id = ?"
-//     var params = [req.params.id]
-//     banco_de_dados.get(sql, params, (err, row) => {
-//         if (err) {
-//           res.status(400).json({"error":err.message});
-//           return;
-//         }
-//         res.json({
-//             "message":"success",
-//             "data":row
-//         })
-//       });
-// });
+objeto.post("/api/usuarios/", (req, res, next) => {
+    var errors=[]
+    if (!req.body.password){
+        errors.push("Nenhum password especificado");
+    }
+    if (!req.body.email){
+        errors.push("Nenhum email especificado");
+    }
+    if (errors.length){
+        res.status(400).json({"Os erros cometidos foram:":errors.join(",")});
+        return;
+    }
+    var data = {
+        name: req.body.name,
+        email: req.body.email,
+        password : md5(req.body.password)
+    }
+    var sql ='INSERT INTO usuario (name, email, password) VALUES (?,?,?)'
+    var params =[data.name, data.email, data.password]
+    banco_de_dados.run(sql, params, function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+        res.json({
+            "message": "success",
+            "data": data,
+            "id" : this.lastID
+        })
+    });
+})
