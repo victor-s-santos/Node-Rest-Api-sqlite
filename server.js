@@ -9,7 +9,7 @@ objeto.listen(porta_http, () => {
     console.log(`Servidor rodando na porta ${porta_http}`)
 });
 
-//definindo um endpoint
+//definindo o endpoint root
 objeto.get('/', (request, response, next) => {
     response.json({"message": "Primeiro teste!"})
 });
