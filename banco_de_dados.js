@@ -13,16 +13,16 @@ let banco_de_dados = new sqlite3.Database(dbsource, (err) => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome text, 
             email text UNIQUE, 
-            senha text, 
+            senha text,
             CONSTRAINT email_unique UNIQUE (email)
             )`,
+        //console.log('Tabela usuario criada com sucesso!')
         (err) => {
             if (err) {
                 console.log('Tabela já está criada!')
-            }else{
-                var insert = 'INSERT INTO usuario (nome, email, senha) VALUES (?,?,?)'
-                banco_de_dados.run(insert, ["admin","admin@example.com",md5("admin123456")])
-                banco_de_dados.run(insert, ["user","user@example.com",md5("user123456")])
+                var insert = 'INSERT or REPLACE INTO usuario (nome, email, senha) VALUES (?,?,?)'
+                banco_de_dados.run(insert, ["victor","victor@santos.com",md5("minhasenhasecreta")])
+                banco_de_dados.run(insert, ["suelen","suelen@simoes.com",md5("swordfish")])
             }
         });  
     }
