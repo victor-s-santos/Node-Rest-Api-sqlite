@@ -41,7 +41,7 @@ objeto.get("/api/usuarios/:id", (req, res, next) => {
           return;
         }
         res.json({
-            "message":"success",
+            "message":"Exibindo usuário pelo id",
             "data":row
         })
       });
@@ -78,7 +78,7 @@ objeto.post("/api/usuarios/", (req, res, next) => {
             return;
         }
         res.json({
-            "message": "success",
+            "message": "Novo usuário postado com sucesso",
             "data": data,
             "id" : this.lastID
         })
@@ -111,5 +111,19 @@ objeto.patch("/api/usuarios/:id", (req, res, next) => {
                 data: data,
                 changes: this.changes
             })
+    });
+})
+
+//DELETE
+objeto.delete("/api/usuarios/:id", (req, res, next) => {
+    banco_de_dados.run(
+        'DELETE FROM usuario WHERE id = ?',
+        req.params.id,
+        function (err, result) {
+            if (err){
+                res.status(400).json({"error": res.message})
+                return;
+            }
+            res.json({"message":"Usuário deletado com sucesso!", changes: this.changes})
     });
 })
