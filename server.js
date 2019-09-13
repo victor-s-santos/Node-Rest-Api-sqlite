@@ -1,7 +1,7 @@
 //criando o meu objeto
 const express = require('express')
 const objeto = express()
-
+const banco_de_dados = require('./banco_de_dados.js')
 //porta do meu servidor
 const porta_http = 8000
 
