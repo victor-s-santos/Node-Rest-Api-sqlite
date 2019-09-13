@@ -20,9 +20,9 @@ let banco_de_dados = new sqlite3.Database(dbsource, (err) => {
         (err) => {
             if (err) {
                 console.log('Tabela já está criada!')
-                var insert = 'INSERT or REPLACE INTO usuario (nome, email, senha) VALUES (?,?,?)'
-                banco_de_dados.run(insert, ["victor","victor@santos.com",md5("minhasenhasecreta")])
-                banco_de_dados.run(insert, ["suelen","suelen@simoes.com",md5("swordfish")])
+                // var insert = 'INSERT or REPLACE INTO usuario (nome, email, senha) VALUES (?,?,?)'
+                // banco_de_dados.run(insert, ["victor","victor@santos.com",md5("minhasenhasecreta")])
+                // banco_de_dados.run(insert, ["suelen","suelen@simoes.com",md5("swordfish")])
             }
         });  
     }

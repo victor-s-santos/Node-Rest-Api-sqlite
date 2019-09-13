@@ -29,3 +29,35 @@ objeto.get('/api/usuarios', (request, response, next) => {
         })
     });
 });
+//endpoint para exibir usuario pelo id
+objeto.get("/api/usuarios/:id", (req, res, next) => {
+    var sql = "select * from usuario where id = ?"
+    var params = [req.params.id]
+    banco_de_dados.get(sql, params, (err, row) => {
+        if (err) {
+          res.status(400).json({"error":err.message});
+          return;
+        }
+        res.json({
+            "message":"success",
+            "data":row
+        })
+      });
+});
+
+
+
+// objeto.get("/api/usuarios/:id", (req, res, next) => {
+//     var sql = "select * from usuario where id = ?"
+//     var params = [req.params.id]
+//     banco_de_dados.get(sql, params, (err, row) => {
+//         if (err) {
+//           res.status(400).json({"error":err.message});
+//           return;
+//         }
+//         res.json({
+//             "message":"success",
+//             "data":row
+//         })
+//       });
+// });
