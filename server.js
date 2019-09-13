@@ -13,3 +13,19 @@ objeto.listen(porta_http, () => {
 objeto.get('/', (request, response, next) => {
     response.json({"message": "Primeiro teste!"})
 });
+
+//definindo o endpoint dos usuarios 
+objeto.get('/api/usuarios', (request, response, next) => {
+    const sql = 'SELECT * from usuario'
+    const lista = []
+    banco_de_dados.all(sql, lista, (err, rows) => {
+        if(err){
+            response.status(400).json({"error":err.message});
+            return;
+        }
+        response.json({
+            "message": "Sucesso!",
+            "data": rows
+        })
+    });
+});
