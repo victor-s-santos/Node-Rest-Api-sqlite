@@ -4,7 +4,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('Usuários da api', () => 
+describe('Usuários da api', () => {
     describe('/GET usuarios', () =>{
         it('Testando o método GET nos usuários', (done) => {
             chai.request('http://localhost:8000')
@@ -15,5 +15,22 @@ describe('Usuários da api', () =>
                 done();
                 }); 
         });
-    })
-);
+    });
+
+    describe('/POST usuarios', () => {
+        it('Testa o método POST nos usuários', (done) => {
+            let usuario = {
+                name: "Usuario",
+                email: "usuario@email",
+                password: "minhasenhasecreta"
+            }
+            chai.request('http://localhost:8000')
+            .post('/api/usuarios')
+            .send(usuario)
+            .end((err, res) => {
+                res.should.have.status(200);
+            done();
+            });
+        });
+    });
+})
