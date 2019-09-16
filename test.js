@@ -5,7 +5,7 @@ const should = chai.should();
 const min = 1;
 const max = 100;
 const numero = Math.floor(Math.random() * (+max - +min)) + +min; 
-
+const numero2 = Math.floor(Math.random() * (+max - +min)) + +min;
 
 chai.use(chaiHttp);
 
@@ -38,4 +38,24 @@ describe('Usuários da api', () => {
             });
         });
     });
+//pensar em como resolver esse teste, dado que ele tá pegando o primeiro elemnto dentro do array, o qual 
+//é a mensagem
+/*
+    describe('/GET/:id usuario', () => {
+        it('GET em um usuario especifico pelo id', (done) => {
+            let id_ = numero2;
+                chai.request('http://localhost:8000')
+                .get('/api/usuarios/' + id_)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.have.property('id_').eql(id_);
+                    res.body.should.have.property('nome');
+                    res.body.should.have.property('email');
+                    res.body.should.have.property('password');
+                done();
+                });
+        });
+    });
 })
+
+*/

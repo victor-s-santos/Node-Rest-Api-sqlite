@@ -41,7 +41,7 @@ objeto.get("/api/usuarios/:id", (req, res, next) => {
           return;
         }
         res.json({
-            "message":"Exibindo usuário pelo id",
+            //"message":"Exibindo usuário pelo id",
             "data":row
         })
       });
