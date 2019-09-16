@@ -1,6 +1,11 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
+//função que ajuda a gerar nome aleatório
+const min = 1;
+const max = 100;
+const numero = Math.floor(Math.random() * (+max - +min)) + +min; 
+
 
 chai.use(chaiHttp);
 
@@ -19,14 +24,14 @@ describe('Usuários da api', () => {
 
     describe('/POST usuarios', () => {
         it('Testa o método POST nos usuários', (done) => {
-            let usuario = {
-                name: "Usuario",
-                email: "usuario@email",
+            let novousuario = {
+                name: "Usuario" + numero,
+                email: "usuario" + numero + "@email",
                 password: "minhasenhasecreta"
             }
             chai.request('http://localhost:8000')
             .post('/api/usuarios')
-            .send(usuario)
+            .send(novousuario)
             .end((err, res) => {
                 res.should.have.status(200);
             done();
